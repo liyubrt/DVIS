@@ -13,7 +13,7 @@ except:
     pass
 
 import warnings
-warnings.filterwarnings('ignore', category=FutureWarning, module='torch.*')
+warnings.filterwarnings('ignore', module='torch.*')
 
 import copy
 import itertools

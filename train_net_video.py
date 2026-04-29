@@ -12,6 +12,9 @@ try:
 except:
     pass
 
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning, module='torch.*')
+
 import copy
 import itertools
 import logging

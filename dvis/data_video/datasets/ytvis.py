@@ -187,6 +187,11 @@ def _get_ytvis_2021_instances_meta():
     }
     return ret
 
+def _get_ytvis_2022_instances_meta():
+    # YTVIS 2022 uses the same 40 categories as YTVIS 2021
+    return _get_ytvis_2021_instances_meta()
+
+
 def _get_ovis_instances_meta():
     thing_ids = [k["id"] for k in OVIS_CATEGORIES if k["isthing"] == 1]
     thing_colors = [k["color"] for k in OVIS_CATEGORIES if k["isthing"] == 1]

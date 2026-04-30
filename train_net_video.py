@@ -9,11 +9,10 @@ try:
     from shapely.errors import ShapelyDeprecationWarning
     import warnings
     warnings.filterwarnings('ignore', category=ShapelyDeprecationWarning)
+    warnings.filterwarnings('ignore', category=FutureWarning, module='.*torch.*')
+    warnings.filterwarnings('ignore', category=FutureWarning, module='.*detectron2.*')
 except:
     pass
-
-import warnings
-warnings.filterwarnings('ignore', module='torch.*')
 
 import copy
 import itertools
@@ -58,6 +57,7 @@ from dvis import (
     VSSEvaluator,
     add_minvis_config,
     add_dvis_config,
+    add_rfdetr_config,
     build_combined_loader,
     build_detection_train_loader,
     build_detection_test_loader,
@@ -287,6 +287,7 @@ def setup(args):
     add_maskformer2_video_config(cfg)
     add_minvis_config(cfg)
     add_dvis_config(cfg)
+    add_rfdetr_config(cfg)
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
     cfg.freeze()

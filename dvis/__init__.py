@@ -7,11 +7,11 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 
 # config
-from .config import add_minvis_config, add_dvis_config
+from .config import add_minvis_config, add_dvis_config, add_rfdetr_config
 
 from .video_mask2former_transformer_decoder import\
     VideoMultiScaleMaskedTransformerDecoder_minvis, VideoMultiScaleMaskedTransformerDecoder_dvis
-from .meta_architecture import MinVIS, DVIS_online, DVIS_offline
+from .meta_architecture import MinVIS, DVIS_online, DVIS_offline, DVIS_online_rfdetr
 
 # video
 from .data_video import (

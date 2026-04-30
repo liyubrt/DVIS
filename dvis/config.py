@@ -56,3 +56,28 @@ def add_dvis_config(cfg):
     cfg.DATALOADER.NUM_WORKERS = 4
 
 
+def add_rfdetr_config(cfg):
+    """Add RF-DETR specific config entries."""
+    cfg.MODEL.RFDETR = CN()
+    cfg.MODEL.RFDETR.ENCODER = "dinov2_windowed_small"
+    cfg.MODEL.RFDETR.OUT_FEATURE_INDEXES = [3, 6, 9, 12]
+    cfg.MODEL.RFDETR.PROJECTOR_SCALE = ["P4"]
+    cfg.MODEL.RFDETR.PATCH_SIZE = 14
+    cfg.MODEL.RFDETR.NUM_WINDOWS = 4
+    cfg.MODEL.RFDETR.POSITIONAL_ENCODING_SIZE = 37
+    cfg.MODEL.RFDETR.RESOLUTION = 560
+    cfg.MODEL.RFDETR.FREEZE_ENCODER = False
+    cfg.MODEL.RFDETR.HIDDEN_DIM = 256
+    cfg.MODEL.RFDETR.NUM_QUERIES = 300
+    cfg.MODEL.RFDETR.DEC_LAYERS = 3
+    cfg.MODEL.RFDETR.SA_NHEADS = 8
+    cfg.MODEL.RFDETR.CA_NHEADS = 16
+    cfg.MODEL.RFDETR.DEC_N_POINTS = 2
+    cfg.MODEL.RFDETR.DIM_FEEDFORWARD = 2048
+    cfg.MODEL.RFDETR.TWO_STAGE = True
+    cfg.MODEL.RFDETR.GROUP_DETR = 13
+    cfg.MODEL.RFDETR.BBOX_REPARAM = True
+    cfg.MODEL.RFDETR.LITE_REFPOINT_REFINE = True
+    cfg.MODEL.RFDETR.MASK_DOWNSAMPLE_RATIO = 4
+    # Path to pretrained RF-DETR segmentation weights (optional)
+    cfg.MODEL.RFDETR.PRETRAIN_WEIGHTS = ""

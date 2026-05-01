@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=gpu_task
-#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_rfdetr_l_0429.txt
+#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_rfdetr_sl_0430.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-gpu=7
 #SBATCH --mem-per-gpu=60G
-#SBATCH --time=5-00:00:00
+#SBATCH --time=10-00:00:00
 # #SBATCH --exclude=amxnl007
 # #SBATCH --nodelist=stc01sppamxnl021
 # #SBATCH --exclude=stc01spplmdanl006,stc01sppamxnl016
@@ -27,7 +27,8 @@ cd /home/li.yu/code/mymnt/DVIS
 python train_net_video.py \
   --num-gpus 4 \
   --config-file configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml \
-  SOLVER.IMS_PER_BATCH 64
+  SOLVER.IMS_PER_BATCH 64 \
+  OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_rfdetr_sl_0430
 
 # deactivate virtual env
 conda deactivate

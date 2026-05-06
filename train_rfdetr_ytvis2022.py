@@ -22,8 +22,10 @@ for _key in ("SLURM_NTASKS", "SLURM_JOB_NAME", "SLURM_NTASKS_PER_NODE"):
 from rfdetr import RFDETRSegLarge
 
 
-DATASET_DIR = "/mnt/data3/jupiter/datasets/public_datasets/ytvis2022_coco"
-OUTPUT_DIR = "/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_rfdetr_sl_ft_0504"
+DATASET_DIR = "/mnt/data3/jupiter/datasets/public_datasets/ytvis2022_coco_merged"
+# DATASET_DIR = "/mnt/data3/jupiter/datasets/public_datasets/ytvis2022_coco"  # YTVIS only
+OUTPUT_DIR = "/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_rfdetr_sl_ft_0506"
+# OUTPUT_DIR = "/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_rfdetr_sl_ft_0504"  # YTVIS only
 
 
 def main():

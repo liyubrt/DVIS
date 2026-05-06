@@ -3,6 +3,8 @@ __pycache__/
 pretrained_models/
 output_*
 datasets/ytvis_2022
+datasets/coco
+datasets/jupiter_humans
 mask2former/modeling/pixel_decoder/ops/MultiScaleDeformableAttention.egg-info/
 mask2former/modeling/pixel_decoder/ops/build/
 mask2former/modeling/pixel_decoder/ops/dist/

@@ -2,9 +2,11 @@
 
 # Evaluate DVIS Online Swin-L on YTVIS 2022 validation set
 
-GT_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022"
-OUTPUT_DIR="/home/li.yu/code/mymnt/DVIS/output_DVIS_Online_SwinL_YTVIS22"
+EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_dvis_swl_0503"
+OUTPUT_DIR="$EXP_DIR"
+MODEL_PATH="$EXP_DIR/model_final.pth"
 CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml"
+DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022/valid"
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -19,26 +21,32 @@ else
     echo "Running inference..."
     cd /home/li.yu/code/mymnt/DVIS
     python train_net_video.py \
-      --num-gpus 4 \
+      --num-gpus 1 \
       --config-file "$CONFIG_FILE" \
       --eval-only \
-      MODEL.WEIGHTS "$OUTPUT_DIR/model_final.pth" \
+      MODEL.WEIGHTS "$MODEL_PATH" \
+      DATASETS.TEST '("ytvis_2022_val",)' \
       OUTPUT_DIR "$OUTPUT_DIR"
 fi
 
-# Symlink results.json into gt directory (evaluate.py expects both in same dir)
+# Evaluation against YTVIS 2022 val GT
+GT_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022"
 ln -sf "$OUTPUT_DIR/inference/results.json" "$GT_DIR/results.json"
-
-# Create eval_results directory
 mkdir -p "$OUTPUT_DIR/eval_results"
-
-# Run evaluation
 python "$GT_DIR/evaluate.py" "$GT_DIR" "$OUTPUT_DIR/eval_results"
-
-# Clean up symlink
 rm -f "$GT_DIR/results.json"
-
-# Print results
 echo ""
 echo "=== Evaluation Results ==="
 cat "$OUTPUT_DIR/eval_results/scores.txt"
+
+# # Visualize predictions as videos with instance masks, class names, and IDs
+# echo ""
+# echo "=== Generating Visualization Videos ==="
+# cd /home/li.yu/code/mymnt/DVIS
+# python visualize_predictions.py \
+#   --results-json "$OUTPUT_DIR/inference/results.json" \
+#   --annotations "$DATASET_DIR/instances.json" \
+#   --images-dir "$DATASET_DIR/JPEGImages" \
+#   --output-dir "$OUTPUT_DIR/vis_videos" \
+#   --score-thr 0.3 \
+#   --fps 3

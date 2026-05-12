@@ -159,14 +159,19 @@ class RFDETRSegmenter(nn.Module):
             self.transformer.decoder.bbox_embed = None
 
         # --- Two-stage heads ---
+        # enc_out_class_embed is only used for internal proposal ranking (scoring
+        # encoder outputs to select top-k decoder queries). It does NOT need to
+        # match the downstream task's num_classes. We use 91 (COCO) so the
+        # pretrained weights load correctly and the segmenter can be frozen.
+        enc_out_num_classes = 91
         if two_stage:
             self.transformer.enc_out_bbox_embed = nn.ModuleList(
                 [copy.deepcopy(self.bbox_embed) for _ in range(group_detr)]
             )
-            enc_class_embed = nn.Linear(hidden_dim, num_classes + 1)
+            enc_class_embed = nn.Linear(hidden_dim, enc_out_num_classes)
             prior_prob = 0.01
             bias_value = -math.log((1 - prior_prob) / prior_prob)
-            enc_class_embed.bias.data = torch.ones(num_classes + 1) * bias_value
+            enc_class_embed.bias.data = torch.ones(enc_out_num_classes) * bias_value
             self.transformer.enc_out_class_embed = nn.ModuleList(
                 [copy.deepcopy(enc_class_embed) for _ in range(group_detr)]
             )
@@ -177,11 +182,13 @@ class RFDETRSegmenter(nn.Module):
         )
 
         # --- DVIS-compatible heads ---
-        # Class prediction (matching DVIS's VideoSetCriterion expectation: num_classes+1 with bg)
-        self.class_embed = nn.Linear(hidden_dim, num_classes + 1)
+        # Class prediction: use the same 91 classes as the pretrained checkpoint
+        # so weights load correctly. The segmenter is frozen and the tracker
+        # re-predicts class logits with its own head (matching num_classes).
+        self.class_embed = nn.Linear(hidden_dim, enc_out_num_classes)
         prior_prob = 0.01
         bias_value = -math.log((1 - prior_prob) / prior_prob)
-        self.class_embed.bias.data = torch.ones(num_classes + 1) * bias_value
+        self.class_embed.bias.data = torch.ones(enc_out_num_classes) * bias_value
 
         # Mask embed: project query to mask_dim for dot-product with mask_features
         # Used by the ReferringTracker for re-generating masks

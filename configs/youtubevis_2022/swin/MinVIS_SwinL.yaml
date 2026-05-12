@@ -1,4 +1,4 @@
-_BASE_: ../DVIS_Online_R50.yaml
+_BASE_: ../MinVIS_R50.yaml
 MODEL:
   BACKBONE:
     NAME: "D2SwinTransformer"
@@ -11,17 +11,24 @@ MODEL:
     DROP_PATH_RATE: 0.3
     PATCH_NORM: True
     PRETRAIN_IMG_SIZE: 384
-  WEIGHTS: "model_final_e5f453.pkl"
+  WEIGHTS: "./pretrained_models/model_final_e5f453.pkl"
   PIXEL_MEAN: [123.675, 116.280, 103.530]
   PIXEL_STD: [58.395, 57.120, 57.375]
   MASK_FORMER:
     NUM_OBJECT_QUERIES: 200
+DATASETS:
+  DATASET_NEED_MAP: [True, False, ]
+  DATASET_TYPE: ['image_instance', 'video_instance', ]
+  DATASET_TYPE_TEST: ['video_instance', ]
+  DATASET_RATIO: [1.0, 1.0]
+  TRAIN: ("coco2ytvis2021_train", "ytvis_2022_train")
+  TEST: ("ytvis_2022_val",)
 SOLVER:
-  IMS_PER_BATCH: 16
+  IMS_PER_BATCH: 8
 INPUT:
   MIN_SIZE_TRAIN: (360, 480, 600)
   MAX_SIZE_TRAIN: 1024
   MIN_SIZE_TEST: 480
   PSEUDO:
     MIN_SIZE_TRAIN: (360, 480, 600)
-OUTPUT_DIR: './output_DVIS_Online_SwinL_YTVIS22'
+OUTPUT_DIR: './output_MinVIS_SwinL_YTVIS22'

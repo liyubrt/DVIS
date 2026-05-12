@@ -417,6 +417,8 @@ class CocoClipDatasetMapper:
                 src2tgt = COCO_TO_YTVIS_2019
             elif tgt_dataset_name.startswith("ytvis_2021"):
                 src2tgt = COCO_TO_YTVIS_2021
+            elif tgt_dataset_name.startswith("ytvis_2022"):
+                src2tgt = COCO_TO_YTVIS_2021  # YTVIS 2022 uses same 40 categories as 2021
             elif tgt_dataset_name.startswith("ovis"):
                 src2tgt = COCO_TO_OVIS
             else:

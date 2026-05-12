@@ -18,7 +18,7 @@ MODEL:
     TRAIN_NUM_POINTS: 12544
     OVERSAMPLE_RATIO: 3.0
     IMPORTANCE_SAMPLE_RATIO: 0.75
-    SIZE_DIVISIBILITY: 32
+    SIZE_DIVISIBILITY: 24
     TEST:
       OVERLAP_THRESHOLD: 0.8
       OBJECT_MASK_THRESHOLD: 0.8
@@ -30,14 +30,14 @@ MODEL:
     ENCODER: "dinov2_windowed_small"
     OUT_FEATURE_INDEXES: [3, 6, 9, 12]
     PROJECTOR_SCALE: ["P4"]
-    PATCH_SIZE: 16
+    PATCH_SIZE: 12
     NUM_WINDOWS: 2
-    POSITIONAL_ENCODING_SIZE: 44
-    RESOLUTION: 704
-    FREEZE_ENCODER: False
+    POSITIONAL_ENCODING_SIZE: 42
+    RESOLUTION: 504
+    FREEZE_ENCODER: True
     HIDDEN_DIM: 256
     NUM_QUERIES: 300
-    DEC_LAYERS: 4
+    DEC_LAYERS: 5
     SA_NHEADS: 8
     CA_NHEADS: 16
     DEC_N_POINTS: 2
@@ -47,7 +47,7 @@ MODEL:
     BBOX_REPARAM: True
     LITE_REFPOINT_REFINE: True
     MASK_DOWNSAMPLE_RATIO: 4
-    PRETRAIN_WEIGHTS: "/home/li.yu/code/mymnt/DVIS/pretrained_models/rf-detr-large-2026.pth"
+    PRETRAIN_WEIGHTS: "/home/li.yu/code/mymnt/DVIS/pretrained_models/rf-detr-seg-large.pt"
   WEIGHTS: ""
   TRACKER:
     DECODER_LAYERS: 6
@@ -64,9 +64,9 @@ SOLVER:
   WEIGHT_DECAY: 0.05
 
 INPUT:
-  MIN_SIZE_TRAIN: (480, 576, 704)
-  MAX_SIZE_TRAIN: 1024
-  MIN_SIZE_TEST: 704
+  MIN_SIZE_TRAIN: (360, 480, 504)
+  MAX_SIZE_TRAIN: 768
+  MIN_SIZE_TEST: 480
   SAMPLING_FRAME_NUM: 5
   SAMPLING_FRAME_RANGE: 2
   SAMPLING_FRAME_SHUFFLE: False
@@ -79,19 +79,19 @@ INPUT:
     SIZE: (384, 600)
   PSEUDO:
     AUGMENTATIONS: ['rotation']
-    MIN_SIZE_TRAIN: (480, 576, 704)
-    MAX_SIZE_TRAIN: 1024
+    MIN_SIZE_TRAIN: (360, 480, 504)
+    MAX_SIZE_TRAIN: 768
     CROP:
       ENABLED: False
       TYPE: "absolute_range"
       SIZE: (384, 600)
 
 DATASETS:
-  DATASET_NEED_MAP: [False, ]
-  DATASET_TYPE: ['video_instance', ]
+  DATASET_NEED_MAP: [True, False, ]
+  DATASET_TYPE: ['image_instance', 'video_instance', ]
   DATASET_TYPE_TEST: ['video_instance', ]
-  DATASET_RATIO: [1.0]
-  TRAIN: ("ytvis_2022_train",)
+  DATASET_RATIO: [1.0, 1.0]
+  TRAIN: ("coco2ytvis2021_train", "ytvis_2022_train")
   TEST: ("ytvis_2022_val",)
 
 OUTPUT_DIR: './output_DVIS_Online_RFDETR_YTVIS22'

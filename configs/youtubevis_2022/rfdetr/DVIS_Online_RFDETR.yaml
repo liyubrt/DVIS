@@ -87,11 +87,11 @@ INPUT:
       SIZE: (384, 600)
 
 DATASETS:
-  DATASET_NEED_MAP: [False, ]
-  DATASET_TYPE: ['video_instance', ]
+  DATASET_NEED_MAP: [True, False, ]
+  DATASET_TYPE: ['image_instance', 'video_instance', ]
   DATASET_TYPE_TEST: ['video_instance', ]
-  DATASET_RATIO: [1.0]
-  TRAIN: ("ytvis_2022_train",)
+  DATASET_RATIO: [1.0, 1.0]
+  TRAIN: ("coco2ytvis2021_train", "ytvis_2022_train")
   TEST: ("ytvis_2022_val",)
 
 OUTPUT_DIR: './output_DVIS_Online_RFDETR_YTVIS22'

@@ -62,8 +62,8 @@ _PREDEFINED_SPLITS_OVIS = {
 
 # ==== Custom: Jupiter humans sequences ===========
 _PREDEFINED_SPLITS_JUPITER_HUMANS = {
-    "jupiter_humans_val": ("jupiter_humans/ytvis_format/JPEGImages",
-                            "jupiter_humans/ytvis_format/instances.json"),
+    "jupiter_humans_test": ("jupiter_humans/test/JPEGImages",
+                             "jupiter_humans/test/instances.json"),
 }
 
 _PREDEFINED_SPLITS_COCO_VIDEO = {

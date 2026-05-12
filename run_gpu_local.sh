@@ -15,19 +15,29 @@
 
 # activate virtual env
 eval "$(/home/li.yu/anaconda3/bin/conda shell.bash hook)"
-conda activate torch2100_mask2former  # for mask2former, rtdetr training
+conda activate torch221_mask2former  # on lambda, for mask2former, rtdetr training
+# conda activate torch2100_mask2former  # on harvset, for mask2former, rtdetr training
 
 # run DVIS
-cd /home/li.yu/code/mymnt/DVIS
+cd /home/li.yu/code/DVIS
+
+# use R50
+python train_net_video.py \
+  --num-gpus 2 \
+  --config-file /home/li.yu/code/DVIS/configs/youtubevis_2022/DVIS_Online_R50.yaml \
+  --resume MODEL.WEIGHTS /home/li.yu/code/DVIS/pretrained_models/minvis_ytvis21_r50.pth
+
+# # use swin large
 # python train_net_video.py \
 #   --num-gpus 4 \
 #   --config-file /home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml \
 #   --resume MODEL.WEIGHTS /home/li.yu/code/mymnt/DVIS/pretrained_models/minvis_ytvis21_swin_large.pth
 
-python train_net_video.py \
-  --num-gpus 4 \
-  --config-file configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml \
-  SOLVER.IMS_PER_BATCH 64
+# # use rfdetr
+# python train_net_video.py \
+#   --num-gpus 4 \
+#   --config-file configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml \
+#   SOLVER.IMS_PER_BATCH 64
 
 # deactivate virtual env
 conda deactivate

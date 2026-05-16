@@ -62,6 +62,8 @@ _PREDEFINED_SPLITS_OVIS = {
 
 # ==== Custom: Jupiter humans sequences ===========
 _PREDEFINED_SPLITS_JUPITER_HUMANS = {
+    "jupiter_humans_6k_train": ("jupiter_humans_6k/train/JPEGImages",
+                                 "jupiter_humans_6k/train/instances.json"),
     "jupiter_humans_test": ("jupiter_humans/test/JPEGImages",
                              "jupiter_humans/test/instances.json"),
 }

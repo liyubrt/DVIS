@@ -5,6 +5,7 @@ output_*
 datasets/ytvis_2022
 datasets/coco
 datasets/jupiter_humans
+datasets/jupiter_humans_6k
 mask2former/modeling/pixel_decoder/ops/MultiScaleDeformableAttention.egg-info/
 mask2former/modeling/pixel_decoder/ops/build/
 mask2former/modeling/pixel_decoder/ops/dist/

@@ -2,7 +2,7 @@
 
 # Evaluate DVIS Online Swin-L on YTVIS 2022 validation set
 
-EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_dvis_m2f_swl_0506"
+EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_m2f_swl_0514"
 OUTPUT_DIR="$EXP_DIR"
 MODEL_PATH="$EXP_DIR/model_final.pth"
 CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml"

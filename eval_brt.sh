@@ -14,11 +14,11 @@
 
 # Evaluate DVIS model on Jupiter humans-on-path test set
 
-# EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0508"
-# OUTPUT_DIR="$EXP_DIR/eval_brt"
-# MODEL_PATH="$EXP_DIR/model_final.pth"
-OUTPUT_DIR="/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Online_SwinL_YTVIS21_on_jupiter_humans"
-MODEL_PATH="pretrained_models/DVIS_online_ytvis21_swinl.pth"
+EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_dvis_m2f_swl_0515"
+OUTPUT_DIR="$EXP_DIR/eval_brt"
+MODEL_PATH="$EXP_DIR/model_final.pth"
+# OUTPUT_DIR="/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Online_SwinL_YTVIS21_on_jupiter_humans"
+# MODEL_PATH="pretrained_models/DVIS_online_ytvis21_swinl.pth"
 CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml"
 DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/jupiter_humans/test"
 

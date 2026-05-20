@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=dvis_training
-#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_jupiter6khuman_dvis_m2f_swl_0517.txt
+#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_dvis_rfdetr_sl_0519.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
@@ -32,24 +32,25 @@ conda activate torch2100_mask2former  # for mask2former, rtdetr training
 #   SOLVER.IMS_PER_BATCH 4 \
 #   OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_m2f_swl_ft_0516
 
-# train Swin-L based DVIS online using finetuned segmenter
-python train_net_video.py \
-  --num-gpus 4 \
-  --config-file /home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml \
-  SOLVER.IMS_PER_BATCH 4 \
-  MODEL.WEIGHTS /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_m2f_swl_ft_0516/model_final.pth \
-  OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_dvis_m2f_swl_0517
+# # train Swin-L based DVIS online using finetuned segmenter
+# python train_net_video.py \
+#   --num-gpus 4 \
+#   --config-file /home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml \
+#   SOLVER.IMS_PER_BATCH 4 \
+#   MODEL.WEIGHTS /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_m2f_swl_ft_0516/model_final.pth \
+#   OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_dvis_m2f_swl_0517
 
 # # Finetune RF-DETR on COCO + YTVIS 2022
 # cd /home/li.yu/code/mymnt/DVIS
 # python train_rfdetr_ytvis2022.py --epochs 20 --batch-size 4 --devices 4
 
-# # train RF-DETR based DVIS online using finetuned segmenter
-# python train_net_video.py \
-#   --num-gpus 4 \
-#   --config-file configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml \
-#   MODEL.RFDETR.PRETRAIN_WEIGHTS /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_rfdetr_sl_ft_0506/rfdetr_finetuned.pt \
-#   OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0508
+# train RF-DETR based DVIS online using finetuned segmenter
+python train_net_video.py \
+  --num-gpus 4 \
+  --config-file configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml \
+  SOLVER.IMS_PER_BATCH 4 \
+  MODEL.RFDETR.PRETRAIN_WEIGHTS /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_rfdetr_sl_ft_0506/rfdetr_finetuned.pt \
+  OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519
 
 
 # # convert brt train sequence dataset to ytvis format

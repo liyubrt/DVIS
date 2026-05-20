@@ -18,6 +18,7 @@ Usage:
 import argparse
 import json
 import os
+import random
 from collections import defaultdict
 
 import cv2
@@ -84,6 +85,8 @@ def main():
     parser.add_argument("--score-thr", type=float, default=0.3, help="Score threshold for predictions")
     parser.add_argument("--fps", type=int, default=6, help="FPS for output videos")
     parser.add_argument("--max-videos", type=int, default=None, help="Max number of videos to visualize (for debugging)")
+    parser.add_argument("--num-random", type=int, default=None, help="Randomly sample N videos to visualize")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for --num-random sampling")
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -110,7 +113,10 @@ def main():
         preds_by_video[vid].sort(key=lambda p: p["score"], reverse=True)
 
     video_ids = sorted(video_id_to_info.keys())
-    if args.max_videos is not None:
+    if args.num_random is not None:
+        random.seed(args.seed)
+        video_ids = random.sample(video_ids, min(args.num_random, len(video_ids)))
+    elif args.max_videos is not None:
         video_ids = video_ids[: args.max_videos]
 
     print(f"Visualizing {len(video_ids)} videos, score_thr={args.score_thr}")
@@ -122,6 +128,8 @@ def main():
         video_name = file_names[0].split("/")[0]
 
         preds = preds_by_video.get(video_id, [])
+        if len(preds) == 1:
+            continue
 
         out_path = os.path.join(args.output_dir, f"{video_name}.mp4")
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")

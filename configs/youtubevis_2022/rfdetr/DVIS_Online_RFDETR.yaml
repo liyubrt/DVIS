@@ -55,7 +55,7 @@ MODEL:
   PIXEL_STD: [58.395, 57.120, 57.375]
 
 SOLVER:
-  IMS_PER_BATCH: 16 # for 1 GPU
+  IMS_PER_BATCH: 4 # for 1 GPU
   BASE_LR: 0.0001
   STEPS: (28000,)
   MAX_ITER: 40000
@@ -87,11 +87,19 @@ INPUT:
       SIZE: (384, 600)
 
 DATASETS:
-  DATASET_NEED_MAP: [True, False, ]
-  DATASET_TYPE: ['image_instance', 'video_instance', ]
-  DATASET_TYPE_TEST: ['video_instance', ]
+  DATASET_NEED_MAP: [True, False]
+  DATASET_TYPE: ['image_instance', 'video_instance']
+  DATASET_TYPE_TEST: ['video_instance']
   DATASET_RATIO: [1.0, 1.0]
   TRAIN: ("coco2ytvis2021_train", "ytvis_2022_train")
   TEST: ("ytvis_2022_val",)
+
+# DATASETS:
+#   DATASET_NEED_MAP: [True, False, False, ]
+#   DATASET_TYPE: ['image_instance', 'video_instance', 'video_instance', ]
+#   DATASET_TYPE_TEST: ['video_instance',]
+#   DATASET_RATIO: [1.0, 1.0, 1.0, ]
+#   TRAIN: ("coco2ytvis2021_train", "jupiter_humans_6k_train", "ytvis_2022_train")
+#   TEST: ("ytvis_2022_val",)
 
 OUTPUT_DIR: './output_DVIS_Online_RFDETR_YTVIS22'

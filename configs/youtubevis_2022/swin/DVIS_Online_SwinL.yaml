@@ -22,7 +22,7 @@ DATASETS:
   DATASET_RATIO: [1.0, 1.0, 1.0]
   TRAIN: ("coco2ytvis2021_train", "jupiter_humans_6k_train", "ytvis_2022_train")
 SOLVER:
-  IMS_PER_BATCH: 8
+  IMS_PER_BATCH: 4
 INPUT:
   MIN_SIZE_TRAIN: (360, 480, 600)
   MAX_SIZE_TRAIN: 1024

@@ -128,8 +128,8 @@ def main():
         video_name = file_names[0].split("/")[0]
 
         preds = preds_by_video.get(video_id, [])
-        if len(preds) == 1:
-            continue
+        # if len(preds) == 1:
+        #     continue
 
         out_path = os.path.join(args.output_dir, f"{video_name}.mp4")
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")

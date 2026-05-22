@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=eval_dvis
-#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_dvis_rfdetr_sl_0519_test.txt
+#SBATCH --output=/home/li.yu/code/scripts/eval_dvis.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
@@ -12,15 +12,22 @@
 # #SBATCH --exclude=stc01spplmdanl006,stc01sppamxnl016
 # #SBATCH --exclude=stc01sppamxnl[001-008]
 
-# Evaluate DVIS model on Jupiter humans-on-path test set
 
-EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
-OUTPUT_DIR="$EXP_DIR/eval_brt"
-MODEL_PATH="$EXP_DIR/model_final.pth"
-# OUTPUT_DIR="/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Online_SwinL_YTVIS21_on_jupiter_humans"
-# MODEL_PATH="pretrained_models/DVIS_online_ytvis21_swinl.pth"
-CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml"
+# Evaluate DVIS Models on Jupiter human test set
+
+# config
+CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/ovis/swin/DVIS_Offline_SwinL.yaml"
 DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/jupiter_humans/test"
+
+# downloaded model
+MODEL_PATH=pretrained_models/DVIS_offline_ovis_swinl.pth
+OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_OVIS/jupiter_humans_test
+
+# # trained model
+# EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
+# MODEL_PATH="$EXP_DIR/model_final.pth"
+# OUTPUT_DIR="$EXP_DIR"
+
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -40,6 +47,7 @@ else
       --eval-only \
       MODEL.WEIGHTS "$MODEL_PATH" \
       DATASETS.TEST '("jupiter_humans_test",)' \
+      SOLVER.IMS_PER_BATCH 4 \
       OUTPUT_DIR "$OUTPUT_DIR"
 fi
 

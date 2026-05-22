@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=eval_dvis
-#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_dvis_rfdetr_sl_0519_test.txt
+#SBATCH --output=/home/li.yu/code/scripts/output_Downloaded_DVIS_Offline_SwinL_YTVIS21.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
@@ -12,13 +12,21 @@
 # #SBATCH --exclude=stc01spplmdanl006,stc01sppamxnl016
 # #SBATCH --exclude=stc01sppamxnl[001-008]
 
-# Evaluate DVIS Online Swin-L on YTVIS 2022 validation set
+# Evaluate DVIS Models on YTVIS 2022 validation set
 
-EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
-OUTPUT_DIR="$EXP_DIR"
-MODEL_PATH="$EXP_DIR/model_final.pth"
-CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/rfdetr/DVIS_Online_RFDETR.yaml"
+# config
+CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Offline_SwinL.yaml"
 DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022/valid"
+
+# downloaded model
+MODEL_PATH=pretrained_models/DVIS_offline_ytvis21_swinl.pth
+OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/ytvis2022_val
+
+# # trained model
+# EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
+# MODEL_PATH="$EXP_DIR/model_final.pth"
+# OUTPUT_DIR="$EXP_DIR"
+
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -38,6 +46,7 @@ else
       --eval-only \
       MODEL.WEIGHTS "$MODEL_PATH" \
       DATASETS.TEST '("ytvis_2022_val",)' \
+      SOLVER.IMS_PER_BATCH 4 \
       OUTPUT_DIR "$OUTPUT_DIR"
 fi
 

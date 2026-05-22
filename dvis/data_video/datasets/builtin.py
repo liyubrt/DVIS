@@ -66,6 +66,8 @@ _PREDEFINED_SPLITS_JUPITER_HUMANS = {
                                  "jupiter_humans_6k/train/instances.json"),
     "jupiter_humans_test": ("jupiter_humans/test/JPEGImages",
                              "jupiter_humans/test/instances.json"),
+    "sample_videos": ("sample_videos/JPEGImages",
+                       "sample_videos/instances.json"),
 }
 
 _PREDEFINED_SPLITS_COCO_VIDEO = {

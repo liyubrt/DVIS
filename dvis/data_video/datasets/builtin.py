@@ -68,6 +68,14 @@ _PREDEFINED_SPLITS_JUPITER_HUMANS = {
                              "jupiter_humans/test/instances.json"),
     "sample_videos": ("sample_videos/JPEGImages",
                        "sample_videos/instances.json"),
+    "sample_videos_claude2": ("sample_videos_claude2/JPEGImages",
+                              "sample_videos_claude2/instances.json"),
+    "cutnpaste_from_sample_videos": ("cutnpaste_from_sample_videos/train/JPEGImages",
+                                      "cutnpaste_from_sample_videos/train/instances.json"),
+    "cutnpaste_from_sample_videos_gemini": ("cutnpaste_from_sample_videos_gemini/train/JPEGImages",
+                                             "cutnpaste_from_sample_videos_gemini/train/instances.json"),
+    "cutnpaste_from_sample_videos_claude2": ("cutnpaste_from_sample_videos_claude2/train/JPEGImages",
+                                              "cutnpaste_from_sample_videos_claude2/train/instances.json"),
 }
 
 _PREDEFINED_SPLITS_COCO_VIDEO = {

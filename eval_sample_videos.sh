@@ -10,12 +10,12 @@
 
 # Run DVIS inference on sample videos
 
-VIDEO_DIR="/home/li.yu/code/mymnt/Wan2.2/sample_videos"
-DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/sample_videos"
+VIDEO_DIR="/home/li.yu/code/mymnt/Wan2.2/sample_videos_claude2"
+DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/sample_videos_claude2"
 
 # downloaded model
 MODEL_PATH=pretrained_models/DVIS_offline_ytvis21_swinl.pth
-OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/wan22_videos
+OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/sample_videos_claude2
 
 # # trained model
 # EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
@@ -31,13 +31,13 @@ mkdir -p "$OUTPUT_DIR"
 eval "$(/home/li.yu/anaconda3/bin/conda shell.bash hook)"
 conda activate torch2100_mask2former
 
-# # Step 1: Extract frames and create instances.json
-# echo "=== Preparing dataset ==="
-# cd /home/li.yu/code/mymnt/DVIS
-# python prepare_videos_for_inference.py \
-#   --input-dir "$VIDEO_DIR" \
-#   --output-dir "$DATASET_DIR" \
-#   --fps 0
+# Step 1: Extract frames and create instances.json
+echo "=== Preparing dataset ==="
+cd /home/li.yu/code/mymnt/DVIS
+python prepare_videos_for_inference.py \
+  --input-dir "$VIDEO_DIR" \
+  --output-dir "$DATASET_DIR" \
+  --fps 0
 
 # Step 2: Run DVIS inference
 if [ -f "$OUTPUT_DIR/inference/results.json" ]; then
@@ -50,7 +50,7 @@ else
       --config-file "$CONFIG_FILE" \
       --eval-only \
       MODEL.WEIGHTS "$MODEL_PATH" \
-      DATASETS.TEST '("sample_videos",)' \
+      DATASETS.TEST '("sample_videos_claude2",)' \
       SOLVER.IMS_PER_BATCH 4 \
       OUTPUT_DIR "$OUTPUT_DIR"
 fi

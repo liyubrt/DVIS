@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --job-name=dvis_sample_videos
-#SBATCH --output=/home/li.yu/code/scripts/wan22_videos.txt
+#SBATCH --job-name=eval_dvis
+#SBATCH --output=/home/li.yu/code/scripts/eval_sample_videos_%j.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
@@ -10,12 +10,12 @@
 
 # Run DVIS inference on sample videos
 
-VIDEO_DIR="/home/li.yu/code/mymnt/Wan2.2/sample_videos_claude2"
-DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/sample_videos_claude2"
+VIDEO_DIR="/home/li.yu/code/mymnt/Wan2.2/sample_videos_snowboard"
+DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/sample_videos_snowboard"
 
 # downloaded model
 MODEL_PATH=pretrained_models/DVIS_offline_ytvis21_swinl.pth
-OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/sample_videos_claude2
+OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/sample_videos_snowboard
 
 # # trained model
 # EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_dvis_rfdetr_sl_0519"
@@ -50,7 +50,7 @@ else
       --config-file "$CONFIG_FILE" \
       --eval-only \
       MODEL.WEIGHTS "$MODEL_PATH" \
-      DATASETS.TEST '("sample_videos_claude2",)' \
+      DATASETS.TEST '("sample_videos_snowboard",)' \
       SOLVER.IMS_PER_BATCH 4 \
       OUTPUT_DIR "$OUTPUT_DIR"
 fi

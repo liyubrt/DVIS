@@ -76,6 +76,10 @@ _PREDEFINED_SPLITS_JUPITER_HUMANS = {
                                              "cutnpaste_from_sample_videos_gemini/train/instances.json"),
     "cutnpaste_from_sample_videos_claude2": ("cutnpaste_from_sample_videos_claude2/train/JPEGImages",
                                               "cutnpaste_from_sample_videos_claude2/train/instances.json"),
+    "sample_videos_flying_disc": ("sample_videos_flying_disc/JPEGImages",
+                                   "sample_videos_flying_disc/instances.json"),
+    "sample_videos_snowboard": ("sample_videos_snowboard/JPEGImages",
+                                 "sample_videos_snowboard/instances.json"),
 }
 
 _PREDEFINED_SPLITS_COCO_VIDEO = {

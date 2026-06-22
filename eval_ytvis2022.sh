@@ -15,7 +15,7 @@
 # Evaluate DVIS Models on YTVIS 2022 validation set
 
 # config
-CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml"
+CONFIG_FILE="/home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_R50.yaml"
 DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022/valid"
 
 # # downloaded model
@@ -23,7 +23,7 @@ DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022/valid"
 # OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_YTVIS21/ytvis2022_val
 
 # trained model
-EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khumancnpc2_dvis_m2f_swl_0601"
+EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter3kvehiclecnp_dvis_m2f_swl_0621"
 MODEL_PATH="$EXP_DIR/model_final.pth"
 OUTPUT_DIR="$EXP_DIR/ytvis2022_val"
 
@@ -55,10 +55,11 @@ GT_DIR="/home/li.yu/code/mymnt/DVIS/datasets/ytvis_2022"
 ln -sf "$OUTPUT_DIR/inference/results.json" "$GT_DIR/results.json"
 mkdir -p "$OUTPUT_DIR/eval_results"
 python "$GT_DIR/evaluate.py" "$GT_DIR" "$OUTPUT_DIR/eval_results"
-rm -f "$GT_DIR/results.json"
 echo ""
 echo "=== Evaluation Results ==="
 cat "$OUTPUT_DIR/eval_results/scores.txt"
+
+rm -f "$GT_DIR/results.json"
 
 # # Visualize predictions as videos with instance masks, class names, and IDs
 # echo ""

@@ -9,11 +9,13 @@ datasets/jupiter_humans_6k
 datasets/cutnpaste_from_sample_videos/
 datasets/cutnpaste_from_sample_videos_claude2/
 datasets/cutnpaste_from_sample_videos_gemini/
+datasets/cutnpaste_from_sample_videos_vehicle/
 datasets/sample_videos
 datasets/sample_videos_claude2/
 datasets/sample_videos_gemini/
 datasets/sample_videos_flying_disc/
 datasets/sample_videos_snowboard/
+datasets/sample_videos_vehicle/
 mask2former/modeling/pixel_decoder/ops/MultiScaleDeformableAttention.egg-info/
 mask2former/modeling/pixel_decoder/ops/build/
 mask2former/modeling/pixel_decoder/ops/dist/

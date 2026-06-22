@@ -32,6 +32,7 @@ import numpy as np
 from pycocotools import mask as mask_util
 
 PERSON_CATEGORY_ID = 26
+VEHICLE_CATEGORY_IDS = {1, 4, 5, 23, 36, 37}  # airplane, boat, car, motorbike, train, truck
 
 
 class DVISFrameExtractor:
@@ -75,18 +76,25 @@ class DVISFrameExtractor:
         self,
         video_name: str,
         frame_ids: List[int],
+        category: str = "human",
     ) -> Tuple[List[np.ndarray], List[np.ndarray]]:
         """
-        Extract frames and the first person mask for the given video and frame indices.
+        Extract frames and instance masks for the given video and frame indices.
 
         Args:
             video_name: Video folder name (under JPEGImages/).
             frame_ids: List of 0-indexed frame indices to extract.
+            category: "human" (mask value 11) or "vehicle" (mask value 10).
+                      For human, uses PERSON_CATEGORY_ID (single class).
+                      For vehicle, merges all VEHICLE_CATEGORY_IDS classes.
 
         Returns:
             frames: List of BGR images (H, W, 3) as np.uint8.
-            masks: List of binary masks (H, W) as np.uint8, 255=person, 0=background.
+            masks: List of masks (H, W) as np.uint8, mask_value=category pixels, 0=background.
         """
+        if category not in ("human", "vehicle"):
+            raise ValueError(f"category must be 'human' or 'vehicle', got '{category}'")
+
         if video_name not in self.name_to_video:
             raise ValueError(
                 f"Video '{video_name}' not found. "
@@ -102,15 +110,23 @@ class DVISFrameExtractor:
             if fid < 0 or fid >= num_frames:
                 raise ValueError(f"frame_id {fid} out of range [0, {num_frames - 1}]")
 
-        # Find first (highest-scoring) person prediction
+        # Select predictions matching the requested category
         preds = self.preds_by_video.get(video_id, [])
-        person_preds = [
-            p for p in preds
-            if p["category_id"] == PERSON_CATEGORY_ID
-            and p["score"] >= self.score_thr
-        ]
-        person_preds.sort(key=lambda p: p["score"], reverse=True)
-        person_pred = person_preds[0] if person_preds else None
+        if category == "human":
+            mask_value = 11
+            cat_preds = [
+                p for p in preds
+                if p["category_id"] == PERSON_CATEGORY_ID
+                and p["score"] >= self.score_thr
+            ]
+        else:  # vehicle
+            mask_value = 10
+            cat_preds = [
+                p for p in preds
+                if p["category_id"] in VEHICLE_CATEGORY_IDS
+                and p["score"] >= self.score_thr
+            ]
+        cat_preds.sort(key=lambda p: p["score"], reverse=True)
 
         frames = []
         masks = []
@@ -123,15 +139,12 @@ class DVISFrameExtractor:
 
             frames.append(image)
 
-            if person_pred is not None:
-                seg = person_pred["segmentations"][fid]
+            mask_img = np.zeros(image.shape[:2], dtype=np.uint8)
+            for pred in cat_preds:
+                seg = pred["segmentations"][fid]
                 if seg is not None:
                     binary_mask = mask_util.decode(seg)  # (H, W) uint8, 0/1
-                    mask_img = (binary_mask * 11).astype(np.uint8)
-                else:
-                    mask_img = np.zeros(image.shape[:2], dtype=np.uint8)
-            else:
-                mask_img = np.zeros(image.shape[:2], dtype=np.uint8)
+                    mask_img[binary_mask > 0] = mask_value
 
             masks.append(mask_img)
 

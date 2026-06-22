@@ -24,7 +24,7 @@ DATASET_DIR="/home/li.yu/code/mymnt/DVIS/datasets/jupiter_humans/test"
 # OUTPUT_DIR=/home/li.yu/code/mymnt/DVIS/output_Downloaded_DVIS_Offline_SwinL_OVIS/jupiter_humans_test
 
 # trained model
-EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khumancnpc2_dvis_m2f_swl_0601"
+EXP_DIR="/mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter3kvehiclecnp_dvis_m2f_swl_0621"
 MODEL_PATH="$EXP_DIR/model_final.pth"
 OUTPUT_DIR="$EXP_DIR/jupiter_humans_test"
 

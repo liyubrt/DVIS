@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=dvis_training
-#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_jupiter6khumancnpc2_dvis_m2f_swl_0601.txt
+#SBATCH --output=/home/li.yu/code/scripts/ytvis2022_coco_jupiter3kvehiclecnp_dvis_m2f_swl_0621.txt
 #SBATCH --partition=gen4,gen5,sxm5,gen3
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4
@@ -38,7 +38,7 @@ python train_net_video.py \
   --config-file /home/li.yu/code/mymnt/DVIS/configs/youtubevis_2022/swin/DVIS_Online_SwinL.yaml \
   SOLVER.IMS_PER_BATCH 4 \
   MODEL.WEIGHTS /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khuman_m2f_swl_ft_0516/model_final.pth \
-  OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter6khumancnpc2_dvis_m2f_swl_0601
+  OUTPUT_DIR /mnt/data2/jupiter/li.yu/exps/driveable_terrain_model/ytvis2022_coco_jupiter3kvehiclecnp_dvis_m2f_swl_0621
 
 # # Finetune RF-DETR on COCO + YTVIS 2022
 # cd /home/li.yu/code/mymnt/DVIS
